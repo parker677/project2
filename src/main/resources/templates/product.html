@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카메라 구매 사이트</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        #camera-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            padding: 20px;
+            max-width: 1000px;
+        }
+
+        #camera {
+            max-width: 130%;
+            cursor: pointer;
+        }
+
+        .camera-info {
+            text-align: left;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 55%;
+            margin-left: 200px;
+            position: relative;
+        }
+
+        h1, h2 {
+            color: #343a40;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #495057;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 5px;
+        }
+
+        .buttons {
+            margin-left: 200px;
+            padding: 5px 20px;
+            justify-content: center;
+        }
+
+        .buttons button {
+            width: 100px;
+            margin-right: 3px;
+        }
+
+        #contact-box {
+            border: 2px solid #ced4da;
+            padding: 20px;
+            text-align: center;
+            margin-top: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        #date-confirm button {
+            width: 50%;
+        }
+
+        #total-info {
+            font-weight: bold;
+            position: absolute;
+            bottom: -12px;
+        }
+
+        #quantity:focus+#total-info {
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body>
+<h1>상단바 추후에 꾸미기</h1>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">카메라 구매 사이트</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <!-- 네비게이션 메뉴 추가 -->
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="camera.jpg" alt="카메라 이미지" id="camera" class="img-fluid" onclick="showRentalInfo()">
+        </div>
+        <div class="col-md-6">
+            <div class="camera-info" id="camera-info">
+                <h2>카메라 구매 정보</h2>
+                <p><strong>브랜드:</strong> <span th:text="${product.brand}"></span></p>
+                <p><strong>제품명:</strong> <span th:text="${product.name}"></span></p>
+                <p><strong>가격:</strong> <span id="product-price" th:text="${product.price}"></span>원</p>
+                <p><strong>유형:</strong> <span th:text="${product.type}"></span></p>
+                <p id="shipping-method-info"><strong>수령 방법:</strong> 직접 수령</p>
+
+                <div class="form-group">
+                    <label for="quantity">수량:</label>
+                    <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1"
+                           oninput="updateTotal()">
+                </div>
+
+                <p id="total-info"><strong>총합계:</strong> <span id="total-amount">0</span>원</p>
+            </div>
+            <div class="buttons mt-3">
+                <div class="button">
+                    <button class="btn btn-success" onclick="purchaseCamera()">주문</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="contact-box" class="mt-5">
+        <p>문의 사항은 고객센터로 전화해주세요</p>
+        <p>0000-0000</p>
+        <p>123456@mjc.ac.kr</p>
+        <p>※주문 완료 후 판매자와 연락하여 수령 날짜를 정해주세요</p>
+        <p>※수령 날짜 미지정시 주문 10일 후 자동으로 취소됩니다.</p>
+    </div>
+</div>
+
+<script>
+    // 페이지 로드 시 초기화 함수 호출
+    document.addEventListener("DOMContentLoaded", function () {
+        initializeTotal();
+    });
+
+    function initializeTotal() {
+        // 초기 수량과 가격 가져오기
+        const initialQuantity = document.getElementById("quantity").value;
+        const initialPrice = document.getElementById("product-price").innerText;
+
+
+        // 초기 총 합계 계산
+        const initialTotal = initialQuantity * initialPrice;
+
+        // 초기 총 합계를 화면에 출력
+        document.getElementById("total-amount").innerText = initialTotal.toLocaleString();
+    }
+
+    function updateTotal() {
+        const quantity = document.getElementById("quantity").value;
+        const price = document.getElementById("product-price").innerText;
+        const totalAmount = quantity * price;
+        document.getElementById("total-amount").innerText = totalAmount.toLocaleString();
+    }
+
+    function purchaseCamera() {
+        alert("주문이 완료되었습니다.");
+    }
+</script>
+
+</body>
+
+</html>

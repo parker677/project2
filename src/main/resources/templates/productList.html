@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지와 텍스트 상자</title>
+
+    <style>
+        body {
+            background-color: white;
+            text-align: center;
+            margin: 0;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 0 auto; /* 가운데 정렬을 위한 margin 설정 */
+        }
+
+        header {
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: white;
+            z-index: 1000;
+        }
+
+        button {
+            padding: 15px 20px;
+            margin: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #myPageBtn:hover {
+            background-color: #2980b9;
+        }
+
+        #cameraBtn {
+            background-color: white;
+            color: black;
+        }
+
+        #loginBtn:hover,
+        #signupBtn:hover {
+            background-color: #c0392b;
+        }
+
+        #redBtn:hover {
+            background-color: #e74c3c;
+        }
+
+        #greenBtn:hover {
+            background-color: #2ecc71;
+        }
+
+        #blueBtn:hover {
+            background-color: #3498db;
+        }
+
+        #bodyButtons {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        #bodyButtons button {
+            height: 200px;
+            width: 1000px; /* 이미지 크기를 직접 지정 */
+            background-size: cover;
+            background-position: center;
+        }
+
+        section {
+            width: 80%;
+            margin: 40px auto;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .section-button {
+            width: 70%;
+            padding: 15px 20px;
+            margin: 5px;
+        }
+
+        footer {
+            padding: 20px;
+        }
+
+        .color {
+            background-color: green;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+            margin-left: 150px; /* 좌측 여백을 20px로 설정 */
+            margin-right: 150px; /* 우측 여백을 20px로 설정 */
+        }
+
+        .box {
+            flex-basis: calc(33.33% - 20px); /* 33.33%의 너비, 간격을 포함하여 계산 */
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            position: relative; /* 상대 위치 지정 */
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .rent-button {
+            background-color: #808080;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .rent-button:hover {
+            background-color: #3498db; /* 마우스가 올라갈 때의 배경 색 */
+        }
+
+        .box:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 1px;
+            background-color: #ccc;
+            top: 0;
+            right: 0;
+        }
+
+        .price {
+            font-size: 18px;
+            margin-top: 10px;
+            font-weight: normal; /* 얇은 폰트로 설정 */
+        }
+
+        .detail-button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .detail-button:hover {
+            background-color: #2980b9;
+        }
+
+        footer {
+            padding: 50px;
+            margin-top: 150px; /* 푸터 위쪽 여백을 추가합니다 */
+        }
+
+    </style>
+    <script>
+        function goToProductDetail(id) {
+            window.location.href = "/products/" + id;
+        }
+    </script>
+</head>
+<body>
+
+<div class="header-container">
+    <header>
+        <button id="myPageBtn" >주문 상품 보기</button>
+        <button id="cameraBtn" >Camera</button>
+    </header>
+</div>
+
+
+<div class="container">
+    <div class="box" th:each="product : ${products}">
+        <img src="캐논_EEOS 6D Mark II_렌즈교환중급.jpg">
+        <p class="brand-and-name" th:text="'브랜드: ' + ${product.brand} + ' / 제품명: ' + ${product.name}"></p>
+        <p class="price" th:text="'가격: ' + ${product.price} + '원'"></p>
+        <button class="detail-button" th:onclick="'goToProductDetail(' + ${product.id} + ')'" th:text="'상세 정보보기'"></button>
+    </div>
+</div>
+
+
+
+<footer>
+    <!-- 푸터 내용을 추가하세요 -->
+</footer>
+
+</body>
+</html>

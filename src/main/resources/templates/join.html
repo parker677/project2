@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>join</title>
+    <style>
+        body {
+            text-align: center; /* 글자를 가운데 정렬 */
+            position: relative; /* 상대 위치 지정 */
+        }
+
+        h1 {
+        font-size: 60px; /* 글자 크기를 조절합니다. */
+        display: inline-block; /* 다른 요소와 수평 정렬을 위해 추가 */
+        color: black;
+        }
+
+        nav {
+        background-color: #e0f7d5; /* 연한 연두색 배경 */
+        padding: 10px 0; /* 위아래 내부 간격 설정 */
+        height : 30px;
+        }
+
+        .header {
+        position: relative;
+        }
+
+        .logo {
+        position: absolute; /* 절대 위치 지정 */
+        top: 10%; /* 부모 요소 중앙으로 이동 */
+        right: 100px; /* 오른쪽 여백 */
+        display: flex;
+        align-items: center;
+        }
+
+        .logo img {
+        width: 80px; /* 이미지 너비 조절 */
+        height: auto; /* 이미지 높이 자동으로 설정 */
+        }
+
+        .logo h3 {
+         margin: 0; /* 기본 마진 제거 */
+         margin-left: 2px; /* 로고 이미지와 텍스트 간격 조절 */
+        }
+
+        .product {
+        position: absolute;
+        top: 20px;
+        left: 100px;
+        display: flex; /* 이미지와 검색창을 가로로 나란히 정렬 */
+        align-items: center; /* 수직 가운데 정렬 */
+        }
+
+        .product img {
+        width: 80px; /* 이미지 너비 조절 */
+        height: auto; /* 이미지 높이 자동으로 설정 */
+        }
+
+        .product h3 {
+         margin: 0; /* 기본 마진 제거 */
+         margin-left: 0px; /* 로고 이미지와 텍스트 간격 조절 */
+        }
+
+        .product a,
+        h1 a,
+        .logo a {
+        text-decoration: none; /* 밑줄 제거 */
+        color: inherit; /* 부모 요소의 색상 상속 */
+        }
+
+        form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 500px;
+        margin: auto;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    input, button, select {
+        margin-bottom: 16px;
+        padding: 8px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    button {
+        background-color: #81c147;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #81c147;
+    }
+
+    .checkbox-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 14px;
+    }
+
+    #agree {
+        margin-bottom: 8px;
+    }
+
+    #agree-label {
+        flex: 1;
+        line-height: 1.5;
+    }
+
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        z-index: 1;
+    }
+
+        footer {
+        background-color: #0d571f;
+        color: white;
+        padding: 0 0;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        }
+
+    </style>
+</head>
+<body>
+<div class="header">
+
+    <div class="product">
+        <a href="#제품둘러보기">
+            <img src="camera.png" alt="product">
+            <h3>제품 둘러보기</h3>
+        </a>
+    </div>
+
+    <h1><a href="main">camera</a></h1>
+
+    <nav>
+    </nav>
+
+    <div class="logo">
+        <a href="login.html">
+            <img src="my_page.png" alt="login">
+            <h3>로그인</h3>
+        </a>
+    </div>
+
+</div>
+
+<form id="signup-form">
+    <label for="email">아이디(이메일)</label>
+    <input type="text" id="email" name="email" required>
+    <label for="password">비밀번호</label>
+    <input type="password" id="password" name="password" required>
+    <p>영어 대소문자, 숫자, 특수기호 !#$%^&*만 입력 가능.</p>
+
+    <button type="button" onclick="submitForm()">회원가입하기</button>
+</form>
+
+<div id="popup" class="popup">
+    <p id="popup-message">회원가입이 완료되었습니다.</p>
+    <button onclick="closePopup()">확인</button>
+</div>
+
+<footer>
+    <div class="footer">
+        <p>&copy; 2023 Your Website. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    function submitForm() {
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+
+        var requestBody = {
+            email: email,
+            password: password,
+        };
+
+        fetch("/api/join",{
+            method:"POST",
+            headers:{
+                "Content-type":"application/json"
+            },
+            body:JSON.stringify({
+                email:email,
+                password:password
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // 회원가입 성공 시 처리
+                openPopup('회원가입이 완료되었습니다.');
+            } else {
+                // 회원가입 실패 시 처리
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('에러:', error));
+    }
+
+    function openPopup(message) {
+        document.getElementById('popup-message').innerText = message;
+        document.getElementById('popup').style.display = 'block';
+    }
+
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+            location.href = "/login";
+    }
+
+</script>
+</body>
+</html>
