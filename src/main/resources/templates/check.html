@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"></head>
+</head>
+<body>
+<div class="container">
+    <h2>Your Order History</h2>
+    <div class="row" th:each="buy : ${Buys}">
+        <div class="card">
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+
+                <p class="card-text">ID: <span th:text="${buy.id}"></span></p>
+                <p class="card-text">Name: <span th:text="${buy.name}"></span></p>
+                <p class="card-text">Phone Number: <span th:text="${buy.phoneNumber}"></span></p>
+                <p class="card-text">Address: <span th:text="${buy.address}"></span></p>
+                <p class="card-text">Credit Card Type: <span th:text="${buy.creditCardType}"></span></p>
+                <p class="card-text">Credit Card Number: <span th:text="${buy.creditCardNumber}"></span></p>
+
+                <div th:each="product : ${buy.products}">
+                    <div th:text="${product.name}"></div>
+                    <div th:text="${product.type}"></div>
+                    <div th:text="${product.brand}"></div>
+                    <div th:text="${product.price}"></div>
+                </div>
+
+                <a th:href="@{/order-details/{id}(id=${buy.id})}" class="btn btn-primary">View Order Details</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

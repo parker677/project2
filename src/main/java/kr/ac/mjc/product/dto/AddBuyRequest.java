@@ -12,7 +12,7 @@ public class AddBuyRequest {
     private String address;
     private String creditCardType;
     private String creditCardNumber;
-
+    private Long productId;
     public Buy toEntity(){
         Buy buy = new Buy(this.name,this.phoneNumber,this.address,this.creditCardType,this.creditCardNumber);
         return buy;
@@ -56,5 +56,13 @@ public class AddBuyRequest {
 
     public void setCreditCardNumber(String creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }

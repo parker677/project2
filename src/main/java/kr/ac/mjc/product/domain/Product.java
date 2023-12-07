@@ -27,6 +27,14 @@ public class Product {
     @Column(name = "price", nullable = false)
     private int price;
 
+    @ManyToMany
+    @JoinTable(
+            name = "buy_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "buy_id")
+    )
+    private List<Buy> buys = new ArrayList<>();
+
     public Product(String name, String type, String brand, int price) {
         this.name =name;
         this.type =type;

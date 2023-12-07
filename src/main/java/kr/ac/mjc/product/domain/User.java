@@ -19,9 +19,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Buy> buys = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "products")
-    List<Buy> buyLists = new ArrayList<>();
-
     public long getId() {
         return id;
     }

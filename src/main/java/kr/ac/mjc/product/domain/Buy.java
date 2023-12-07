@@ -2,6 +2,7 @@ package kr.ac.mjc.product.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor
 public class Buy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +38,7 @@ public class Buy {
 
     @ManyToMany
     @JoinTable(
-            name = "buyProduct",
+            name = "buy_product",
             joinColumns = @JoinColumn(name = "buy_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
@@ -104,5 +106,13 @@ public class Buy {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }
