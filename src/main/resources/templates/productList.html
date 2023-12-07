@@ -1,6 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        // 로그아웃 버튼에 이벤트 리스너 추가
+        var logoutButton = document.getElementById("cameraBtn");
+        if (logoutButton) {
+            logoutButton.addEventListener("click", function() {
+                // 로그아웃 API 엔드포인트 호출
+                fetch('/api/logout', {
+                    method: "POST"
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // 로그아웃 성공 시 로그인 페이지로 리다이렉트
+                        window.location.href = "/login";
+                    } else {
+                        // 에러 처리 또는 사용자에게 메시지 표시
+                        console.error('로그아웃 실패:', response.status);
+                        // 여기에서 사용자에게 실패 메시지를 표시할 수 있습니다.
+                    }
+                })
+                .catch(error => {
+                    console.error('로그아웃 중 오류 발생:', error);
+                    // 여기에서 사용자에게 오류 메시지를 표시할 수 있습니다.
+                });
+            });
+        }
+    });
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이미지와 텍스트 상자</title>
@@ -186,7 +215,7 @@
 <div class="header-container">
     <header>
         <button id="myPageBtn" >주문 상품 보기</button>
-        <button id="cameraBtn" >Camera</button>
+        <button id="cameraBtn" >로그아웃</button>
     </header>
 </div>
 

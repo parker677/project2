@@ -43,5 +43,12 @@ public class ProductViewController {
         return mav;
     }
 
-
+    @GetMapping("/buy/{id}")
+    public ModelAndView getBuy(@PathVariable long id){
+        ModelAndView mav = new ModelAndView();
+        Product product = productService.findOne(id);
+        mav.addObject("product",product);
+        mav.setViewName("buy");
+        return mav;
+    }
 }

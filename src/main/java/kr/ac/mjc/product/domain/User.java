@@ -2,6 +2,9 @@ package kr.ac.mjc.product.domain;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class User {
     @Id
@@ -12,6 +15,12 @@ public class User {
     private String email;
     @Column(name="password")
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Buy> buys = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "products")
+    List<Buy> buyLists = new ArrayList<>();
 
     public long getId() {
         return id;

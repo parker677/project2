@@ -8,7 +8,16 @@ public class UserResponse {
 
     private String message;
 
+    public UserResponse(boolean success, String message) {
+        this.success = success;
+        this.message = message;
+    }
+
     private User user;
+
+    public UserResponse() {
+
+    }
 
     public boolean isSuccess() {
         return success;

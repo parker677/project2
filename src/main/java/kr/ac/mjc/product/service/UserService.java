@@ -13,6 +13,10 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
     public UserResponse join(UserRequest request) {
         User checkUser=userRepository.findByEmail(request.getEmail());
 

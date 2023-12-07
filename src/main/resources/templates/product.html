@@ -2,6 +2,27 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
+    <script>
+        function redirectToLogin() {
+            fetch('/api/checkLoginStatus', {
+                method: "POST"
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    var id=document.getElementById("id").value
+                     window.location.href = "/buy/"+id;
+                } else {
+                    // 로그인 상태가 아닌 경우 login 페이지로 이동
+                    window.location.href = "/login";
+	            alert('로그인이 필요한 서비스 입니다.');
+                }
+            })
+            .catch(error => {
+                console.error('Error checking login status:', error);
+            });
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>카메라 구매 사이트</title>
@@ -123,7 +144,7 @@
         </div>
     </div>
 </nav>
-
+<input id="id" type="hidden" th:value="${product.id}">
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -148,7 +169,7 @@
             </div>
             <div class="buttons mt-3">
                 <div class="button">
-                    <button class="btn btn-success" onclick="purchaseCamera()">주문</button>
+                    <button class="btn btn-success" onclick="redirectToLogin()">주문</button>
                 </div>
             </div>
         </div>
@@ -189,7 +210,8 @@
     }
 
     function purchaseCamera() {
-        alert("주문이 완료되었습니다.");
+        var id=document.getElementById("id").value
+       window.location.href = "/buy/"+id;
     }
 </script>
 
