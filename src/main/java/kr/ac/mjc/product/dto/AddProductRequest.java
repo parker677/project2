@@ -17,9 +17,10 @@ public class AddProductRequest {
     private String brand;
 
     private int price;
+    private String imagePath;  // 이미지 경로 필드 추가
 
     public Product toEntity(){
-        Product product = new Product(this.name,this.type,this.brand,this.price);
+        Product product = new Product(this.name, this.type, this.brand, this.price, this.imagePath);  // 이미지 경로 추가
         return product;
     }
 

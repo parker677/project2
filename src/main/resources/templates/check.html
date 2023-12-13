@@ -3,36 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"></head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            text-align: center; /* 글자를 가운데 정렬 */
+            position: relative; /* 상대 위치 지정 */
+        }
+
+        .main h1 {
+        font-size: 50px; /* 글자 크기를 조절합니다. */
+        display: inline-block; /* 다른 요소와 수평 정렬을 위해 추가 */
+        color: black;
+        }
+
+        .camera img {
+        width: 80px; /* 이미지 너비 조절 */
+        height: auto; /* 이미지 높이 자동으로 설정 */
+        }
+
+        nav {
+        background-color: #e0f7d5; /* 연한 연두색 배경 */
+        padding: 10px 0; /* 위아래 내부 간격 설정 */
+        height : 30px;
+        text-align: center; /* 중앙 정렬 추가 */
+        }
+
+        .header  {
+        position: relative;
+        }
+
+        .header h1{
+        font-size: 50px; /* 글자 크기를 조절합니다. */
+        margin-top: -10px;
+        }
+
+        .logo {
+        position: absolute; /* 절대 위치 지정 */
+        top: 10%; /* 부모 요소 중앙으로 이동 */
+        right: 100px; /* 오른쪽 여백 */
+        display: flex;
+        align-items: center;
+        }
+
+        .logo img {
+        width: 50px; /* 이미지 너비 조절 */
+        height: auto; /* 이미지 높이 자동으로 설정 */
+        }
+
+        .logo h3 {
+         margin: 0; /* 기본 마진 제거 */
+         margin-left: 2px; /* 로고 이미지와 텍스트 간격 조절 */
+         font-size: 20px;
+        }
+
+        .camera a,
+        .logo a {
+        text-decoration: none; /* 밑줄 제거 */
+        color: inherit; /* 부모 요소의 색상 상속 */
+        }
+
+        .mt-3{
+        margin-bottom: 30px;
+        }
+
+        footer {
+        background-color: #0d571f;
+        color: white;
+        padding: 15px 0px;
+        text-align: center;
+        }
+    </style>
+
 </head>
 <body>
+<div class="header">
+
+    <!--    <div class="product">-->
+    <!--        <a href="#제품둘러보기">-->
+    <!--            <img src="camera.png" alt="products">-->
+    <!--            <h3>제품 둘러보기</h3>-->
+    <!--        </a>-->
+    <!--    </div>-->
+
+    <div class="camera">
+        <a href="main">
+            <img src="camera.png" alt="main">
+            <h1>Camera Shop</h1>
+        </a>
+    </div>
+
+    <nav>
+    </nav>
+
+    <div class="logo">
+        <a href="login">
+            <img src="my_page.png" alt="login">
+            <h3>로그아웃</h3>
+        </a>
+    </div>
+
+</div>
 <div class="container">
-    <h2>Your Order History</h2>
+    <h2>주문 정보 확인</h2>
+    <div class="mt-3">
+        <a href="/products" class="btn btn-primary">상품 추가하기</a>
+    </div>
     <div class="row" th:each="buy : ${Buys}">
         <div class="card">
             <div class="card-header">
             </div>
             <div class="card-body">
-
-                <p class="card-text">ID: <span th:text="${buy.id}"></span></p>
-                <p class="card-text">Name: <span th:text="${buy.name}"></span></p>
-                <p class="card-text">Phone Number: <span th:text="${buy.phoneNumber}"></span></p>
-                <p class="card-text">Address: <span th:text="${buy.address}"></span></p>
-                <p class="card-text">Credit Card Type: <span th:text="${buy.creditCardType}"></span></p>
-                <p class="card-text">Credit Card Number: <span th:text="${buy.creditCardNumber}"></span></p>
+                <p class="card-text"><strong>이름 : </strong> <span th:text="${buy.name}"></span></p>
+                <p class="card-text"><strong>핸드폰 번호 : </strong> <span th:text="${buy.phoneNumber}"></span></p>
+                <p class="card-text"><strong>주소 : </strong> <span th:text="${buy.address}"></span></p>
+                <p class="card-text"><strong>신용카드 종류 : </strong> <span th:text="${buy.creditCardType}"></span></p>
 
                 <div th:each="product : ${buy.products}">
-                    <div th:text="${product.name}"></div>
-                    <div th:text="${product.type}"></div>
-                    <div th:text="${product.brand}"></div>
-                    <div th:text="${product.price}"></div>
+                    <p class="brand-and-name"><strong th:text="'(' + ${product.brand} + ') ' + ${product.name}"></strong></p>
+                    <p><strong>수량 : </strong>1개</p>
+                    <p><strong>유형 : </strong> <span th:text="${product.type}"></span></p>
+                    <p><strong>가격 : </strong> <span th:text="${product.price} +'원'"></span></p>
                 </div>
 
-                <a th:href="@{/order-details/{id}(id=${buy.id})}" class="btn btn-primary">View Order Details</a>
+
             </div>
         </div>
     </div>
 
 </div>
+<footer>
+    <div class="footer">
+        <p>&copy; 2023 Your Website. All rights reserved.</p>
+    </div>
+</footer>
 </body>
 </html>

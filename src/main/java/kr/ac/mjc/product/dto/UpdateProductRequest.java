@@ -9,6 +9,8 @@ public class UpdateProductRequest {
 
     private int price;
 
+    private String imagePath;  // 이미지 경로 필드 추가
+
     public String getName() {
         return name;
     }
@@ -39,5 +41,13 @@ public class UpdateProductRequest {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

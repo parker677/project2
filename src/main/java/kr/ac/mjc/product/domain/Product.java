@@ -27,6 +27,9 @@ public class Product {
     @Column(name = "price", nullable = false)
     private int price;
 
+    @Column(name = "image_path")
+    private String imagePath;
+
     @ManyToMany
     @JoinTable(
             name = "buy_product",
@@ -35,17 +38,21 @@ public class Product {
     )
     private List<Buy> buys = new ArrayList<>();
 
-    public Product(String name, String type, String brand, int price) {
-        this.name =name;
-        this.type =type;
-        this.brand =brand;
-        this.price =price;
+    public Product(String name, String type, String brand, int price, String imagePath) {
+        this.name = name;
+        this.type = type;
+        this.brand = brand;
+        this.price = price;
+        this.imagePath = imagePath;
     }
-    public void update(String name,String type,String brand, int price){
-        this.name =name;
-        this.type =type;
-        this.brand =brand;
-        this.price =price;
+
+    // 이미지 경로를 업데이트하는 메서드 추가
+    public void update(String name, String type, String brand, int price, String imagePath) {
+        this.name = name;
+        this.type = type;
+        this.brand = brand;
+        this.price = price;
+        this.imagePath = imagePath;
     }
 
     public Long getId() {
@@ -87,4 +94,13 @@ public class Product {
     public void setPrice(int price) {
         this.price = price;
     }
+
+
+    public String getImagePath() {
+        return imagePath;
+    }       //이미지 추가
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }      //이미지 추가
 }

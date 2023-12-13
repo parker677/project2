@@ -3,206 +3,163 @@
 <head>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-        // 로그아웃 버튼에 이벤트 리스너 추가
-        var logoutButton = document.getElementById("cameraBtn");
-        if (logoutButton) {
-            logoutButton.addEventListener("click", function() {
-                // 로그아웃 API 엔드포인트 호출
-                fetch('/api/logout', {
-                    method: "POST"
-                })
-                .then(response => {
-                    if (response.ok) {
-                        // 로그아웃 성공 시 로그인 페이지로 리다이렉트
-                        window.location.href = "/login";
-                    } else {
-                        // 에러 처리 또는 사용자에게 메시지 표시
-                        console.error('로그아웃 실패:', response.status);
-                        // 여기에서 사용자에게 실패 메시지를 표시할 수 있습니다.
-                    }
-                })
-                .catch(error => {
-                    console.error('로그아웃 중 오류 발생:', error);
-                    // 여기에서 사용자에게 오류 메시지를 표시할 수 있습니다.
+            // 로그아웃 버튼에 이벤트 리스너 추가
+            var logoutButton = document.getElementById("cameraBtn");
+            if (logoutButton) {
+                logoutButton.addEventListener("click", function() {
+                    // 로그아웃 API 엔드포인트 호출
+                    fetch('/api/logout', {
+                        method: "POST"
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // 로그아웃 성공 시 로그인 페이지로 리다이렉트
+                            window.location.href = "/login";
+                        } else {
+                            // 에러 처리 또는 사용자에게 메시지 표시
+                            console.error('로그아웃 실패:', response.status);
+                            // 여기에서 사용자에게 실패 메시지를 표시할 수 있습니다.
+                        }
+                    })
+                    .catch(error => {
+                        console.error('로그아웃 중 오류 발생:', error);
+                        // 여기에서 사용자에게 오류 메시지를 표시할 수 있습니다.
+                    });
                 });
-            });
-        }
-    });
+            }
+        });
     </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이미지와 텍스트 상자</title>
-
+    <title>Camera 판매 리스트</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            background-color: white;
-            text-align: center;
-            margin: 0;
-            padding-top: 60px;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            text-align: center; /* 글자를 가운데 정렬 */
+            position: relative; /* 상대 위치 지정 */
         }
 
-        .header-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin: 0 auto; /* 가운데 정렬을 위한 margin 설정 */
+        .main h1 {
+        font-size: 50px; /* 글자 크기를 조절합니다. */
+        display: inline-block; /* 다른 요소와 수평 정렬을 위해 추가 */
+        color: black;
         }
 
-        header {
-            width: 70%;
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            background-color: white;
-            z-index: 1000;
+        .camera img {
+        width: 80px; /* 이미지 너비 조절 */
+        height: auto; /* 이미지 높이 자동으로 설정 */
         }
 
-        button {
-            padding: 15px 20px;
-            margin: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        nav {
+        background-color: #e0f7d5; /* 연한 연두색 배경 */
+        padding: 10px 0; /* 위아래 내부 간격 설정 */
+        height : 30px;
+        text-align: center; /* 중앙 정렬 추가 */
         }
 
-        #myPageBtn:hover {
-            background-color: #2980b9;
+        .header  {
+        position: relative;
         }
 
-        #cameraBtn {
-            background-color: white;
-            color: black;
+        .header h1{
+        font-size: 50px; /* 글자 크기를 조절합니다. */
+        margin-top: -10px;
         }
 
-        #loginBtn:hover,
-        #signupBtn:hover {
-            background-color: #c0392b;
+        .logo {
+        position: absolute; /* 절대 위치 지정 */
+        top: 10%; /* 부모 요소 중앙으로 이동 */
+        right: 100px; /* 오른쪽 여백 */
+        display: flex;
+        align-items: center;
         }
 
-        #redBtn:hover {
-            background-color: #e74c3c;
+        .logo img {
+        width: 50px; /* 이미지 너비 조절 */
+        height: auto; /* 이미지 높이 자동으로 설정 */
         }
 
-        #greenBtn:hover {
-            background-color: #2ecc71;
+        .logo h3 {
+         margin: 0; /* 기본 마진 제거 */
+         margin-left: 2px; /* 로고 이미지와 텍스트 간격 조절 */
+         font-size: 20px;
         }
 
-        #blueBtn:hover {
-            background-color: #3498db;
-        }
-
-        #bodyButtons {
-            flex: 1;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            align-items: center;
-            padding-top: 20px;
-        }
-
-        #bodyButtons button {
-            height: 200px;
-            width: 1000px; /* 이미지 크기를 직접 지정 */
-            background-size: cover;
-            background-position: center;
-        }
-
-        section {
-            width: 80%;
-            margin: 40px auto;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        .section-button {
-            width: 70%;
-            padding: 15px 20px;
-            margin: 5px;
-        }
-
-        footer {
-            padding: 20px;
-        }
-
-        .color {
-            background-color: green;
+        .camera a,
+        .logo a {
+        text-decoration: none; /* 밑줄 제거 */
+        color: inherit; /* 부모 요소의 색상 상속 */
         }
 
         .container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
-            border: 1px solid #ccc;
-            padding: 20px;
+            justify-content: center; /* 박스를 중앙에 정렬 */
+            border: 2px solid #ccc;
+            padding: 30px;
             text-align: center;
-            margin-left: 150px; /* 좌측 여백을 20px로 설정 */
-            margin-right: 150px; /* 우측 여백을 20px로 설정 */
+            margin: 20px auto; /* 변경된 부분: 가운데 정렬을 위해 margin 수정 */
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+
         }
 
         .box {
-            flex-basis: calc(33.33% - 20px); /* 33.33%의 너비, 간격을 포함하여 계산 */
+            flex-basis: calc(33.33% - 20px);
             margin-bottom: 20px;
+            margin-right: 20px; /* 새로 추가한 부분: 이미지 간격 조절 */
             box-sizing: border-box;
-            position: relative; /* 상대 위치 지정 */
+            position: relative;
         }
 
-        img {
+
+        .container .box img {
             max-width: 100%;
             height: auto;
             display: block;
             margin: 0 auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
         }
 
-        .rent-button {
-            background-color: #808080;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .rent-button:hover {
-            background-color: #3498db; /* 마우스가 올라갈 때의 배경 색 */
-        }
-
-        .box:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            height: 100%;
-            width: 1px;
-            background-color: #ccc;
-            top: 0;
-            right: 0;
+        .brand-and-name {
+            font-size: 1.1em;
+            margin: 10px 0;
+            color: #333;
         }
 
         .price {
-            font-size: 18px;
+            font-size: 1.2em;
             margin-top: 10px;
-            font-weight: normal; /* 얇은 폰트로 설정 */
+            font-weight: bold;
+            color: #e53935;
         }
 
         .detail-button {
-            background-color: #3498db;
+            background-color: #4caf50;
             color: white;
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 1.1em;
         }
 
         .detail-button:hover {
-            background-color: #2980b9;
+            background-color: #45a049;
         }
 
         footer {
-            padding: 50px;
-            margin-top: 150px; /* 푸터 위쪽 여백을 추가합니다 */
-        }
-
+    background-color: #0d571f;
+    color: white;
+    padding: 15px 0; /* 적절한 상하 여백을 조절하세요 */
+    text-align: center;
+}
     </style>
     <script>
         function goToProductDetail(id) {
@@ -212,27 +169,47 @@
 </head>
 <body>
 
-<div class="header-container">
-    <header>
-        <button id="myPageBtn" >주문 상품 보기</button>
-        <button id="cameraBtn" >로그아웃</button>
-    </header>
-</div>
+<div class="header">
 
+    <!--    <div class="product">-->
+    <!--        <a href="#제품둘러보기">-->
+    <!--            <img src="camera.png" alt="products">-->
+    <!--            <h3>제품 둘러보기</h3>-->
+    <!--        </a>-->
+    <!--    </div>-->
+
+    <div class="camera">
+        <a href="main">
+            <img src="camera.png" alt="main">
+            <h1>Camera Shop</h1>
+        </a>
+    </div>
+
+    <nav>
+    </nav>
+
+    <div class="logo">
+        <a href="login">
+            <img src="my_page.png" alt="login">
+            <h3>로그아웃</h3>
+        </a>
+    </div>
+
+</div>
 
 <div class="container">
     <div class="box" th:each="product : ${products}">
-        <img src="캐논_EEOS 6D Mark II_렌즈교환중급.jpg">
-        <p class="brand-and-name" th:text="'브랜드: ' + ${product.brand} + ' / 제품명: ' + ${product.name}"></p>
+        <img th:src="${product.imagePath}" alt="Product Image">
+        <p class="brand-and-name" th:text="'(' + ${product.brand} + ') ' + ${product.name}"></p>
         <p class="price" th:text="'가격: ' + ${product.price} + '원'"></p>
         <button class="detail-button" th:onclick="'goToProductDetail(' + ${product.id} + ')'" th:text="'상세 정보보기'"></button>
     </div>
 </div>
 
-
-
 <footer>
-    <!-- 푸터 내용을 추가하세요 -->
+    <div class="footer">
+        <p>&copy; 2023 Camera Shop. All rights reserved.</p>
+    </div>
 </footer>
 
 </body>
